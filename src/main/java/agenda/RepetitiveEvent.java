@@ -1,5 +1,4 @@
 package agenda;
-
 import java.util.*;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
@@ -21,10 +20,12 @@ public class RepetitiveEvent extends Event {
      * <LI>ChronoUnit.MONTHS for monthly repetitions</LI>
      * </UL>
      */
+    private ChronoUnit frequency;
+    private ArrayList<LocalDate> exceptions = new ArrayList<>();
+
     public RepetitiveEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency) {
         super(title, start, duration);
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        this.frequency = frequency;
     }
 
     /**
@@ -33,17 +34,43 @@ public class RepetitiveEvent extends Event {
      * @param date the event will not occur at this date
      */
     public void addException(LocalDate date) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        exceptions.add(date);
     }
 
     /**
-     *
      * @return the type of repetition
      */
     public ChronoUnit getFrequency() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");    
+        return frequency;
     }
 
+    @Override
+    public boolean isInDay(LocalDate aDay) {
+        boolean result = false;
+        switch (frequency) {
+            case DAYS:
+                if (getStart().toLocalDate().equals(aDay) || getStart().toLocalDate().isBefore(aDay)) {
+                    result = true;
+                    break;
+                }
+            case WEEKS:
+                for (int i = 0; i < 53; i++) {
+                    if (getStart().toLocalDate().plus(i, ChronoUnit.WEEKS).equals(aDay)) {
+                        result = true;
+                        break;
+                    }
+                }
+            case MONTHS:
+                for (int i = 0; i < 12; i++) {
+                    if (getStart().toLocalDate().plus(i, ChronoUnit.MONTHS).equals(aDay)) {
+                        result = true;
+                        break;
+                    }
+                }
+        }
+        if (exceptions.contains(aDay)) {
+            result = false;
+        }
+        return result;
+    }
 }

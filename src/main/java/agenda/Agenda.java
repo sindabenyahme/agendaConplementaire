@@ -1,5 +1,4 @@
 package agenda;
-
 import java.time.LocalDate;
 import java.util.*;
 
@@ -12,19 +11,31 @@ public class Agenda {
      *
      * @param e the event to add
      */
+    private ArrayList<Event> events = new ArrayList<>();
+
+    public Agenda() {
+    }
+    public Agenda(ArrayList<Event> thevents) {
+        this.events = events;
+    }
+
     public void addEvent(Event e) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        events.add(e);
     }
 
     /**
      * Computes the events that occur on a given day
      *
      * @param day the day toi test
-     * @return a list of events that occur on that day
+     * @return and iteraror to the events that occur on that day
      */
-    public List<Event> eventsInDay(LocalDate day) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+    public ArrayList<Event> eventsInDay(LocalDate day) {
+        ArrayList<Event> eventsToDay = new ArrayList<>();
+        for (Event e : events){
+            if (e.isInDay(day)){
+                eventsToDay.add(e);
+            }
+        }
+        return eventsToDay;
     }
 }
