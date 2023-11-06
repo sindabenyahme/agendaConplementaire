@@ -15,7 +15,7 @@ public class Agenda {
 
     public Agenda() {
     }
-    public Agenda(ArrayList<Event> thevents) {
+    public Agenda(ArrayList<Event> events) {
         this.events = events;
     }
 
