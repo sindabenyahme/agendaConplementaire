@@ -38,4 +38,22 @@ public class Agenda {
         }
         return eventsToDay;
     }
+
+
+    /**
+     * Trouver les événements de l'agenda en fonction de leur titre
+     *
+     * @param title le titre à rechercher
+     * @return les événements qui ont le même titre
+     */
+    public List<Event> findByTitle(String title) {
+        List<Event> eventsWithTitle = new ArrayList<>();
+        for (Event e : events) {
+            if (e.getTitle().equals(title)) {
+                eventsWithTitle.add(e);
+            }
+        }
+        return eventsWithTitle;
+    }
+
 }
