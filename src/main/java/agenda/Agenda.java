@@ -1,6 +1,8 @@
 package agenda;
 import java.time.LocalDate;
 import java.util.*;
+import java.time.LocalDateTime;
+
 
 /**
  * Description : An agenda that stores events
@@ -56,4 +58,18 @@ public class Agenda {
         return eventsWithTitle;
     }
 
+    public boolean isFreeFor(Event e) {
+        LocalDateTime eventStart = e.getStart();
+        LocalDateTime eventFin = eventStart.plusMinutes(e.getDuration().toMinutes());
+        for (Event eventInAgenda: events) {
+            LocalDateTime eventInAgendaStart = eventInAgenda.getStart();
+            LocalDateTime eventInAgendaFin = eventInAgendaStart.plusMinutes(e.getDuration().toMinutes());
+            if (eventInAgendaStart.isAfter(eventStart) && eventInAgendaStart.isBefore(eventFin)
+                    || eventInAgendaFin.isAfter(eventStart) && eventInAgendaFin.isBefore(eventFin)
+                    || eventInAgendaStart.isBefore(eventStart) && eventInAgendaFin.isAfter(eventFin)) return false;
+        }
+        return true;
+    }
 }
+
+
